@@ -1,9 +1,14 @@
 "use client";
 
+import { MatchStats } from "@/types";
 import { useCallback } from "react";
 import { FileWithPath, useDropzone } from "react-dropzone";
 
-const Upload = ({ setMatches }: { setMatches: (matches: number) => void }) => {
+const Upload = ({
+  setMatchStats,
+}: {
+  setMatchStats: (matchStats: MatchStats) => void;
+}) => {
   const onDrop = useCallback(
     (acceptedFiles: FileWithPath[]) => {
       acceptedFiles.forEach((file) => {
@@ -24,12 +29,17 @@ const Upload = ({ setMatches }: { setMatches: (matches: number) => void }) => {
           );
 
           console.log(matches);
-          setMatches(matches.length);
+          setMatchStats({
+            total: fileObj.length,
+            yes: 0,
+            no: 0,
+            matches: matches.length,
+          });
         };
         reader.readAsText(file);
       });
     },
-    [setMatches]
+    [setMatchStats]
   );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
