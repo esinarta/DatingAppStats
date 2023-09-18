@@ -28,11 +28,18 @@ const Upload = ({
             item.hasOwnProperty("match")
           );
 
-          console.log(matches);
+          const yes = fileObj.filter((item: any) =>
+            item.hasOwnProperty("like")
+          );
+
+          const no = fileObj.filter((item: any) =>
+            item.hasOwnProperty("block")
+          );
+
           setMatchStats({
             total: fileObj.length,
-            yes: 0,
-            no: 0,
+            yes: yes.length,
+            no: no.length,
             matches: matches.length,
           });
         };
