@@ -3,12 +3,41 @@
 import { useCallback } from "react";
 import { FileWithPath, useDropzone } from "react-dropzone";
 
-const Upload = () => {
-  const onDrop = useCallback((acceptedFiles: FileWithPath[]) => {
-    console.log(acceptedFiles);
-  }, []);
+const Upload = ({ setMatches }: { setMatches: (matches: number) => void }) => {
+  const onDrop = useCallback(
+    (acceptedFiles: FileWithPath[]) => {
+      acceptedFiles.forEach((file) => {
+        const reader = new FileReader();
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+        reader.onabort = () => console.log("file reading was aborted");
+        reader.onerror = () => console.log("file reading has failed");
+        reader.onload = () => {
+          const fileStr = reader.result;
+
+          if (typeof fileStr !== "string") return;
+
+          const fileObj = JSON.parse(fileStr);
+          console.log(fileObj);
+
+          const matches = fileObj.filter((item: any) =>
+            item.hasOwnProperty("match")
+          );
+
+          console.log(matches);
+          setMatches(matches.length);
+        };
+        reader.readAsText(file);
+      });
+    },
+    [setMatches]
+  );
+
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop,
+    accept: {
+      "application/json": [".json"],
+    },
+  });
 
   return (
     <div
