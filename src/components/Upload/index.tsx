@@ -42,15 +42,18 @@ const Upload = ({ setMatches }: { setMatches: (matches: number) => void }) => {
   return (
     <div
       {...getRootProps({
-        className: "border-dashed border-2 border-gray-300 rounded-md p-10",
+        className:
+          "w-3/4 border-dashed border-2 border-gray-300 rounded-md p-10",
       })}
     >
       <input {...getInputProps()} />
-      {isDragActive ? (
-        <p>.....</p>
-      ) : (
-        <p>Drag n drop some files here, or click to select files</p>
-      )}
+      <div className="flex justify-center">
+        {isDragActive ? (
+          <p>.....</p>
+        ) : (
+          <p>Drag n drop some files here, or click to select files</p>
+        )}
+      </div>
     </div>
   );
 };
