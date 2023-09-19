@@ -11,6 +11,9 @@ const Stats = ({ matchStats }: { matchStats: MatchStats | undefined }) => {
       <div>Yes: {matchStats.yes}</div>
       <div>No: {matchStats.no}</div>
       <div>Matches: {matchStats.matches}</div>
+      <div>Chats: {matchStats.chats}</div>
+      <div>Longest chat: {matchStats.longestChat}</div>
+      <div>Average chat length: {matchStats.avgChatLength}</div>
     </div>
   );
 };
