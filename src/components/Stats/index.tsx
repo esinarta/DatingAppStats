@@ -1,19 +1,19 @@
 "use client";
 
-import { MatchStats } from "@/types";
+import { HingeStats } from "@/types";
 
-const Stats = ({ matchStats }: { matchStats: MatchStats | undefined }) => {
-  if (!matchStats) return null;
+const Stats = ({ hingeStats }: { hingeStats: HingeStats | undefined }) => {
+  if (!hingeStats) return null;
 
   return (
     <div>
-      <div>Total: {matchStats.total}</div>
-      <div>Yes: {matchStats.yes}</div>
-      <div>No: {matchStats.no}</div>
-      <div>Matches: {matchStats.matches}</div>
-      <div>Chats: {matchStats.chats}</div>
-      <div>Longest chat: {matchStats.longestChat}</div>
-      <div>Average chat length: {matchStats.avgChatLength}</div>
+      <div>Total: {hingeStats.matchStats.seen}</div>
+      <div>Yes: {hingeStats.matchStats.yes}</div>
+      <div>No: {hingeStats.matchStats.no}</div>
+      <div>Matches: {hingeStats.matchStats.matches}</div>
+      <div>Chats: {hingeStats.chatStats.chats}</div>
+      <div>Longest chat: {hingeStats.chatStats.longestChat}</div>
+      <div>Average chat length: {hingeStats.chatStats.avgChatLength}</div>
     </div>
   );
 };

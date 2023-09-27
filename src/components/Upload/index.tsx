@@ -1,13 +1,14 @@
 "use client";
 
-import { MatchStats } from "@/types";
+import { HingeStats } from "@/types";
+import { parseHingeData } from "@/utils/parseHingeData";
 import { useCallback } from "react";
 import { FileWithPath, useDropzone } from "react-dropzone";
 
 const Upload = ({
-  setMatchStats,
+  setHingeStats,
 }: {
-  setMatchStats: (matchStats: MatchStats) => void;
+  setHingeStats: (hingeState: HingeStats) => void;
 }) => {
   const onDrop = useCallback(
     (acceptedFiles: FileWithPath[]) => {
@@ -22,49 +23,14 @@ const Upload = ({
           if (typeof fileStr !== "string") return;
 
           const fileObj = JSON.parse(fileStr);
-          console.log(fileObj);
+          const hingeData = parseHingeData(fileObj);
 
-          const matches = fileObj.filter((item: any) =>
-            item.hasOwnProperty("match")
-          );
-
-          const yes = fileObj.filter((item: any) =>
-            item.hasOwnProperty("like")
-          );
-
-          const no = fileObj.filter((item: any) =>
-            item.hasOwnProperty("block")
-          );
-
-          const chats = fileObj.filter((item: any) =>
-            item.hasOwnProperty("chats")
-          );
-
-          const longestChat = chats.reduce(
-            (acc: number, curr: any) =>
-              curr.chats.length > acc ? curr.chats.length : acc,
-            0
-          );
-
-          const avgChatLength = chats.reduce(
-            (acc: number, curr: any) => acc + curr.chats.length,
-            0
-          );
-
-          setMatchStats({
-            total: fileObj.length,
-            yes: yes.length,
-            no: no.length,
-            matches: matches.length,
-            chats: chats.length,
-            longestChat,
-            avgChatLength: avgChatLength / chats.length,
-          });
+          setHingeStats(hingeData);
         };
         reader.readAsText(file);
       });
     },
-    [setMatchStats]
+    [setHingeStats]
   );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({

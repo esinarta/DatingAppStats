@@ -3,11 +3,13 @@ import { HingeEvent } from "@/types";
 const parseMatchData = (events: HingeEvent[]) => {
   const seen = events.length;
 
-  const matches = events.filter((item: any) => item.hasOwnProperty("match"));
+  const matches = events.filter((item: HingeEvent) =>
+    item.hasOwnProperty("match")
+  );
 
-  const yes = events.filter((item: any) => item.hasOwnProperty("like"));
+  const yes = events.filter((item: HingeEvent) => item.hasOwnProperty("like"));
 
-  const no = events.filter((item: any) => item.hasOwnProperty("block"));
+  const no = events.filter((item: HingeEvent) => item.hasOwnProperty("block"));
 
   return {
     seen,
@@ -18,7 +20,9 @@ const parseMatchData = (events: HingeEvent[]) => {
 };
 
 const parseChatData = (events: HingeEvent[]) => {
-  const chats = events.filter((item: any) => item.hasOwnProperty("chats"));
+  const chats = events.filter((item: HingeEvent) =>
+    item.hasOwnProperty("chats")
+  );
 
   const longestChat = chats.reduce(
     (acc: number, curr: any) =>
