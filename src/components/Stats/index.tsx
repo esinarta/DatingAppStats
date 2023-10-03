@@ -14,6 +14,8 @@ const Stats = ({ hingeStats }: { hingeStats: HingeStats | undefined }) => {
       <div>Chats: {hingeStats.chatStats.chats}</div>
       <div>Longest chat: {hingeStats.chatStats.longestChat}</div>
       <div>Average chat length: {hingeStats.chatStats.avgChatLength}</div>
+      <div>Meetings: {hingeStats.weMetStats.didMeet}</div>
+      <div>My type: {hingeStats.weMetStats.wasMyType}</div>
     </div>
   );
 };

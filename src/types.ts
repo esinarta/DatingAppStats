@@ -1,3 +1,11 @@
+export type HingeObj = {
+  block?: HingeBlockEvent[];
+  chats?: HingeChatEvent[];
+  like?: HingeEvent[];
+  match?: HingeEvent[];
+  we_met?: HingeWeMetEvent[];
+};
+
 export interface HingeEvent {
   type: "block" | "chat" | "like" | "match" | "we_met";
   timestamp: string;
@@ -15,7 +23,7 @@ export interface HingeChatEvent extends HingeEvent {
 
 export interface HingeWeMetEvent extends HingeEvent {
   type: "we_met";
-  did_meet_subject?: boolean;
+  did_meet_subject?: string;
   was_my_type?: boolean;
 }
 
@@ -30,5 +38,9 @@ export type HingeStats = {
     chats: number;
     longestChat: number;
     avgChatLength: number;
+  };
+  weMetStats: {
+    didMeet: number;
+    wasMyType: number;
   };
 };

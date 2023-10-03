@@ -1,15 +1,15 @@
-import { HingeEvent } from "@/types";
+import { HingeObj, HingeWeMetEvent } from "@/types";
 
-const parseMatchData = (events: HingeEvent[]) => {
-  const seen = events.length;
+const parseMatchData = (items: HingeObj[]) => {
+  const seen = items.length;
 
-  const matches = events.filter((item: HingeEvent) =>
+  const matches = items.filter((item: HingeObj) =>
     item.hasOwnProperty("match")
   );
 
-  const yes = events.filter((item: HingeEvent) => item.hasOwnProperty("like"));
+  const yes = items.filter((item: HingeObj) => item.hasOwnProperty("like"));
 
-  const no = events.filter((item: HingeEvent) => item.hasOwnProperty("block"));
+  const no = items.filter((item: HingeObj) => item.hasOwnProperty("block"));
 
   return {
     seen,
@@ -19,10 +19,8 @@ const parseMatchData = (events: HingeEvent[]) => {
   };
 };
 
-const parseChatData = (events: HingeEvent[]) => {
-  const chats = events.filter((item: HingeEvent) =>
-    item.hasOwnProperty("chats")
-  );
+const parseChatData = (items: HingeObj[]) => {
+  const chats = items.filter((item: HingeObj) => item.hasOwnProperty("chats"));
 
   const longestChat = chats.reduce(
     (acc: number, curr: any) =>
@@ -41,9 +39,39 @@ const parseChatData = (events: HingeEvent[]) => {
   };
 };
 
-export const parseHingeData = (events: HingeEvent[]) => {
+const parseWeMetData = (items: HingeObj[]) => {
+  const meetings = items.filter((item: HingeObj) =>
+    item.hasOwnProperty("we_met")
+  );
+
+  const weMetEvents = meetings.reduce(
+    (acc: HingeWeMetEvent[], curr: HingeObj) => [
+      ...acc,
+      ...(curr.we_met?.map((event: HingeWeMetEvent) => ({
+        ...event,
+      })) ?? []),
+    ],
+    []
+  );
+
+  const didMeet = weMetEvents.filter(
+    (event: HingeWeMetEvent) => event.did_meet_subject === "Yes"
+  );
+
+  const wasMyType = weMetEvents.filter(
+    (event: HingeWeMetEvent) => event.was_my_type
+  );
+
   return {
-    matchStats: parseMatchData(events),
-    chatStats: parseChatData(events),
+    didMeet: didMeet.length,
+    wasMyType: wasMyType.length,
+  };
+};
+
+export const parseHingeData = (items: HingeObj[]) => {
+  return {
+    matchStats: parseMatchData(items),
+    chatStats: parseChatData(items),
+    weMetStats: parseWeMetData(items),
   };
 };
