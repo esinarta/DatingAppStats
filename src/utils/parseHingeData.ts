@@ -1,4 +1,4 @@
-import { HingeObj, HingeWeMetEvent } from "@/types";
+import { HingeEvent, HingeObj, HingeWeMetEvent } from "@/types";
 
 const parseMatchData = (items: HingeObj[]) => {
   const seen = items.length;
@@ -11,16 +11,33 @@ const parseMatchData = (items: HingeObj[]) => {
 
   const no = items.filter((item: HingeObj) => item.hasOwnProperty("block"));
 
+  const firstMatch = matches.reduce(
+    (acc: Date, curr: HingeObj) =>
+      new Date(curr.match?.[0].timestamp ?? "") < acc
+        ? new Date(curr.match?.[0].timestamp ?? "")
+        : acc,
+    new Date()
+  );
+
   return {
     seen,
     yes: yes.length,
     no: no.length,
     matches: matches.length,
+    firstMatch,
   };
 };
 
 const parseChatData = (items: HingeObj[]) => {
   const chats = items.filter((item: HingeObj) => item.hasOwnProperty("chats"));
+
+  const firstChat = chats.reduce(
+    (acc: Date, curr: any) =>
+      new Date(curr.chats[0].timestamp) < acc
+        ? new Date(curr.chats[0].timestamp)
+        : acc,
+    new Date()
+  );
 
   const longestChat = chats.reduce(
     (acc: number, curr: any) =>
@@ -34,6 +51,7 @@ const parseChatData = (items: HingeObj[]) => {
 
   return {
     chats: chats.length,
+    firstChat,
     longestChat,
     avgChatLength,
   };

@@ -11,7 +11,9 @@ const Stats = ({ hingeStats }: { hingeStats: HingeStats | undefined }) => {
       <div>Yes: {hingeStats.matchStats.yes}</div>
       <div>No: {hingeStats.matchStats.no}</div>
       <div>Matches: {hingeStats.matchStats.matches}</div>
+      <div>First match: {hingeStats.matchStats.firstMatch.toString()}</div>
       <div>Chats: {hingeStats.chatStats.chats}</div>
+      <div>First chat: {hingeStats.chatStats.firstChat.toString()}</div>
       <div>Longest chat: {hingeStats.chatStats.longestChat}</div>
       <div>Average chat length: {hingeStats.chatStats.avgChatLength}</div>
       <div>Meetings: {hingeStats.weMetStats.didMeet}</div>

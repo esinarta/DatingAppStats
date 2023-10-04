@@ -33,9 +33,11 @@ export type HingeStats = {
     yes: number;
     no: number;
     matches: number;
+    firstMatch: Date;
   };
   chatStats: {
     chats: number;
+    firstChat: Date;
     longestChat: number;
     avgChatLength: number;
   };
