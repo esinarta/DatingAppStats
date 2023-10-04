@@ -32,22 +32,25 @@ const parseChatData = (items: HingeObj[]) => {
   const chats = items.filter((item: HingeObj) => item.hasOwnProperty("chats"));
 
   const firstChat = chats.reduce(
-    (acc: Date, curr: any) =>
-      new Date(curr.chats[0].timestamp) < acc
+    (acc: Date, curr: HingeObj) =>
+      curr.chats && new Date(curr.chats[0].timestamp) < acc
         ? new Date(curr.chats[0].timestamp)
         : acc,
     new Date()
   );
 
   const longestChat = chats.reduce(
-    (acc: number, curr: any) =>
-      curr.chats.length > acc ? curr.chats.length : acc,
+    (acc: number, curr: HingeObj) =>
+      curr.chats && curr.chats.length > acc ? curr.chats.length : acc,
     0
   );
 
   const avgChatLength =
-    chats.reduce((acc: number, curr: any) => acc + curr.chats.length, 0) /
-    chats.length;
+    chats.reduce(
+      (acc: number, curr: HingeObj) =>
+        curr.chats ? acc + curr.chats.length : acc,
+      0
+    ) / chats.length;
 
   return {
     chats: chats.length,
