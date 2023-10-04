@@ -7,17 +7,31 @@ const Stats = ({ hingeStats }: { hingeStats: HingeStats | undefined }) => {
 
   return (
     <div>
-      <div>Total: {hingeStats.matchStats.seen}</div>
-      <div>Yes: {hingeStats.matchStats.yes}</div>
-      <div>No: {hingeStats.matchStats.no}</div>
-      <div>Matches: {hingeStats.matchStats.matches}</div>
-      <div>First match: {hingeStats.matchStats.firstMatch.toString()}</div>
-      <div>Chats: {hingeStats.chatStats.chats}</div>
-      <div>First chat: {hingeStats.chatStats.firstChat.toString()}</div>
-      <div>Longest chat: {hingeStats.chatStats.longestChat}</div>
-      <div>Average chat length: {hingeStats.chatStats.avgChatLength}</div>
-      <div>Meetings: {hingeStats.weMetStats.didMeet}</div>
-      <div>My type: {hingeStats.weMetStats.wasMyType}</div>
+      <div>
+        {`You've seen a total of ${hingeStats.matchStats.seen} people on
+        Hinge.`}
+      </div>
+      <br />
+      <div>{`You've said "yes" to ${hingeStats.matchStats.yes} people and "no" to ${hingeStats.matchStats.no}.`}</div>
+      <br />
+      <div>{`You've had ${hingeStats.matchStats.matches} matches!`}</div>
+      <div>{`Your first match was on ${hingeStats.matchStats.firstMatch.toString()}.`}</div>
+      <br />
+      <div>{`You've had ${hingeStats.chatStats.chats} chats with your matches.`}</div>
+      <div>
+        {`Your first was on ${hingeStats.chatStats.firstChat.toString()}.`}{" "}
+      </div>
+      <div>{`Your longest was ${hingeStats.chatStats.longestChat} messages.`}</div>
+      <div>{`And your average chat length was ${Math.round(
+        hingeStats.chatStats.avgChatLength
+      )} messages.`}</div>
+      <br />
+      <div>
+        {`You've said that you've met ${hingeStats.weMetStats.didMeet} of your matches.`}{" "}
+      </div>
+      <div>
+        {`And that ${hingeStats.weMetStats.wasMyType} of them were your type.`}{" "}
+      </div>
     </div>
   );
 };
